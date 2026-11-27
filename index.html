@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Winamp Wrapped - Share Playlist Favoritmu!</title>
+  <link rel="icon" href="image/icon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class'
+    };
+  </script>
+  <script src="https://unpkg.com/modern-screenshot/dist/index.js"></script>
+
+</head>
+<body class="min-h-screen flex flex-col justify-between bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100 selection:bg-emerald-500 selection:text-white pt-3 transition-colors duration-200">
+
+  <header class="w-full max-w-xl mx-auto px-4 pt-8 pb-6 text-center">
+    <img
+      src="image/logo.png"
+      alt="Logo Winamp Wrapped"
+      style="width: 50px; height: 50px;"
+      class="mx-auto mb-3 object-contain"
+    />
+    <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+      Winamp Wrapped
+    </h1>
+    <p class="mt-1.5 text-base sm:text-lg text-slate-600 dark:text-slate-400 font-medium">
+      Share Playlist Favoritmu!
+    </p>
+  </header>
+
+  <main class="w-full max-w-xl mx-auto px-4 pb-5 flex-1 space-y-8">
+
+    <section class="bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 rounded-2xl p-5 sm:p-6 shadow-sm space-y-4 transition-colors duration-200">
+      <div class="flex items-center justify-between gap-3 border-b border-slate-200 dark:border-slate-800 pb-4">
+        <div>
+          <h2 class="text-lg font-bold text-slate-900 dark:text-white">Susun Playlist</h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Pilih 5-10 lagu favorit. Refresh halaman akan mereset data.</p>
+        </div>
+        <span
+          id="track-counter-badge"
+          style="white-space: nowrap;"
+          class="inline-block shrink-0 px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800"
+        >
+          0 / 10 Lagu
+        </span>
+      </div>
+
+      <div id="status-banner" class="hidden px-3.5 py-2.5 rounded-xl text-xs font-medium border"></div>
+
+      <div>
+        <label class="block text-sm font-semibold text-slate-800 dark:text-slate-200 mb-1.5">
+          Kategori Playlist
+        </label>
+        <div class="grid grid-cols-3 gap-2">
+          <button
+            type="button"
+            id="cat-week-btn"
+            class="py-2.5 px-2 sm:px-3 rounded-xl text-xs sm:text-sm font-semibold border transition cursor-pointer whitespace-nowrap truncate bg-slate-50 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:border-emerald-500 dark:hover:border-emerald-500"
+          >
+            Minggu Ini
+          </button>
+          <button
+            type="button"
+            id="cat-month-btn"
+            class="py-2.5 px-2 sm:px-3 rounded-xl text-xs sm:text-sm font-semibold border transition cursor-pointer whitespace-nowrap truncate bg-slate-50 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:border-emerald-500 dark:hover:border-emerald-500"
+          >
+            Bulan Ini
+          </button>
+          <button
+            type="button"
+            id="cat-year-btn"
+            class="py-2.5 px-2 sm:px-3 rounded-xl text-xs sm:text-sm font-semibold border transition cursor-pointer whitespace-nowrap truncate bg-slate-50 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:border-emerald-500 dark:hover:border-emerald-500"
+          >
+            Tahun Ini
+          </button>
+        </div>
+      </div>
+
+      <div class="relative">
+        <label for="itunes-search-input" class="block text-sm font-semibold text-slate-800 dark:text-slate-200 mb-1.5">
+          Cari Lagu Otomatis
+        </label>
+        <div class="relative">
+          <input
+            type="text"
+            id="itunes-search-input"
+            autocomplete="off"
+            placeholder="Ketik judul lagu atau nama penyanyi..."
+            class="w-full rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 focus:bg-white dark:focus:bg-slate-800/90 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 px-4 py-3 pr-10 outline-none transition"
+          />
+          <div id="search-spinner" class="hidden absolute right-3.5 top-1/2 -translate-y-1/2">
+            <svg class="animate-spin h-4 w-4 text-emerald-600 dark:text-emerald-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+            </svg>
+          </div>
+        </div>
+
+        <div
+          id="search-results-dropdown"
+          class="hidden absolute z-30 left-0 right-0 mt-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-xl max-h-64 overflow-y-auto editor-scroll divide-y divide-slate-100 dark:divide-slate-700/70"
+        ></div>
+      </div>
+
+      <div class="relative flex items-center py-0">
+        <div class="flex-grow border-t border-slate-200 dark:border-slate-800"></div>
+        <span class="flex-shrink mx-3 text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">atau tulis manual</span>
+        <div class="flex-grow border-t border-slate-200 dark:border-slate-800"></div>
+      </div>
+
+      <div>
+        <label for="manual-song-input" class="block text-sm font-semibold text-slate-800 dark:text-slate-200 mb-1.5">
+          Tulis Lagu Manual
+        </label>
+        <div class="flex flex-col sm:flex-row gap-2.5">
+          <input
+            type="text"
+            id="manual-song-input"
+            placeholder="Contoh: Justin Bieber - Baby"
+            class="flex-1 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 focus:bg-white dark:focus:bg-slate-800/90 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 px-4 py-3 outline-none transition"
+          />
+          <button
+            type="button"
+            id="add-manual-btn"
+            class="px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-[0.99] text-white font-bold text-sm transition cursor-pointer shrink-0 shadow-sm"
+          >
+            Tambah Lagu
+          </button>
+        </div>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">
+          Durasi lagu dibuat acak. Lagu #1 adalah lagu yang sedang diputar.
+        </p>
+      </div>
+
+      <div class="mt-6 pt-5 border-t border-slate-200 dark:border-slate-800">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-semibold text-slate-800 dark:text-slate-200">Daftar Lagu Terpilih</h3>
+          <button
+            type="button"
+            id="clear-all-btn"
+            class="hidden text-xs text-rose-600 dark:text-rose-400 hover:text-rose-500 font-semibold transition cursor-pointer"
+          >
+            Kosongkan Semua
+          </button>
+        </div>
+
+        <div id="empty-editor-state" class="rounded-xl border border-dashed border-slate-300 dark:border-slate-700 bg-slate-50/80 dark:bg-slate-800/40 p-6 text-center">
+          <p class="text-sm text-slate-600 dark:text-slate-300 font-medium">Belum ada lagu dipilih</p>
+          <p class="text-xs text-slate-400 dark:text-slate-500 mt-1">Cari lagu di atas atau ketik manual untuk mengisi Winamp Wrapped-mu.</p>
+        </div>
+
+        <ul id="selected-songs-list" class="space-y-2 max-h-80 overflow-y-auto editor-scroll pr-1"></ul>
+      </div>
+    </section>
+
+    <section class="flex flex-col items-center">
+      <div class="w-full flex items-center justify-between max-w-md mb-3 px-1">
+        <span class="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">Live Preview</span>
+        <span class="text-xs font-medium text-slate-500 dark:text-slate-400">(9:16) 1080 × 1920 px</span>
+      </div>
+
+      <div class="preview-stage" id="preview-stage">
+        <div class="preview-scale-wrapper" id="preview-scale-wrapper">
+
+          <div id="winamp-capture-canvas">
+            <div class="w-full text-center">
+              <div style="font-family: 'Share Tech Mono', monospace; font-size: 26px; letter-spacing: 8px; color: #B59A4B; font-weight: 700;">
+                WINAMP WRAPPED
+              </div>
+              <div id="wa-canvas-heading" style="font-family: 'Share Tech Mono', monospace; font-size: 46px; letter-spacing: 3px; color: #FFFFFF; line-height: 1.1; margin-top: 4px; text-shadow: 0 4px 0 #14141F;">
+                MY TOP PLAYLIST
+              </div>
+            </div>
+
+            <div class="flex flex-col items-center w-full" style="gap: 10px;">
+
+              <div class="wa-window">
+                <div class="wa-titlebar">
+                  <span style="color: #B59A4B; font-size: 22px;">⚡</span>
+                  <div class="wa-gold-lines"></div>
+                  <span class="wa-title-text">WINAMP</span>
+                  <div class="wa-gold-lines"></div>
+                  <div class="wa-win-btns">
+                    <div class="wa-win-btn">_</div>
+                    <div class="wa-win-btn">□</div>
+                    <div class="wa-win-btn">×</div>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-12 gap-4 items-stretch">
+                  <div class="col-span-5 wa-lcd-inset p-3 flex flex-col justify-between overflow-hidden">
+                    <div class="flex items-center px-1">
+                      <div class="flex items-center gap-2 shrink-0">
+                        <span style="color: #00FF00; font-size: 22px;">▶</span>
+                        <div style="font-family: 'Share Tech Mono', monospace; font-size: 13px; line-height: 1.05; color: #009900;">
+                          O<br>A<br>I<br>D<br>V
+                        </div>
+                      </div>
+                      <div class="flex-1 flex justify-center items-center">
+                        <div id="wa-main-timer" style="font-family: 'Share Tech Mono', monospace; font-size: 50px; line-height: 1; color: #00FF00; letter-spacing: 2px; white-space: nowrap;">
+                          00:00
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="wa-spectrum-box mt-2" id="wa-spectrum-container"></div>
+                  </div>
+
+                  <div class="col-span-7 flex flex-col justify-between gap-3">
+                    <div class="wa-lcd-inset px-4 py-2">
+                      <div
+                        id="wa-now-playing-title"
+                        style="font-family: 'Share Tech Mono', monospace; font-size: 30px; line-height: 1.35; color: #00FF00; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+                      >
+1. Belum ada lagu dipilih...
+                      </div>
+                    </div>
+
+                    <div class="flex items-center justify-between px-1">
+                      <div class="flex items-center gap-3">
+                        <div class="wa-lcd-inset px-3 py-1" style="font-family: 'Share Tech Mono', monospace; font-size: 22px; color: #00FF00;">
+                          128
+                        </div>
+                        <span style="font-family: 'Share Tech Mono', monospace; font-size: 20px; color: #FFFFFF;">kbps</span>
+                        <div class="wa-lcd-inset px-3 py-1" style="font-family: 'Share Tech Mono', monospace; font-size: 22px; color: #00FF00;">
+                          44
+                        </div>
+                        <span style="font-family: 'Share Tech Mono', monospace; font-size: 20px; color: #FFFFFF;">kHz</span>
+                      </div>
+                      <div class="flex items-center gap-3" style="font-family: 'Share Tech Mono', monospace; font-size: 22px;">
+                        <span style="color: #008000;">mono</span>
+                        <span style="color: #00FF00; font-weight: bold;">stereo</span>
+                      </div>
+                    </div>
+
+                    <div class="flex items-center gap-4 px-1">
+                      <div class="wa-slider-track flex-1">
+                        <div class="wa-slider-thumb" style="left: 68%;">
+                          <span></span><span></span><span></span>
+                        </div>
+                      </div>
+                      <div class="wa-slider-track" style="width: 130px;">
+                        <div class="wa-slider-thumb" style="left: 38%;">
+                          <span></span><span></span><span></span>
+                        </div>
+                      </div>
+                      <div class="flex gap-1.5">
+                        <div class="wa-ctrl-btn px-2.5 py-1 text-base">
+                          <span style="color: #008000; margin-right: 4px;">●</span>EQ
+                        </div>
+                        <div class="wa-ctrl-btn px-2.5 py-1 text-base">
+                          <span style="color: #008000; margin-right: 4px;">●</span>PL
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-3 mb-3 px-1">
+                  <div class="wa-lcd-inset h-5 relative flex items-center">
+                    <div class="wa-ctrl-btn" style="position: absolute; left: 34%; width: 68px; height: 24px;">
+                      <div style="width: 44px; height: 6px; background: #B59A4B;"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex items-center justify-between gap-2 pt-1">
+                  <div class="flex items-center gap-1.5">
+                    <div class="wa-ctrl-btn w-16 h-12 text-2xl">|◀</div>
+                    <div class="wa-ctrl-btn w-16 h-12 text-2xl">▶</div>
+                    <div class="wa-ctrl-btn w-16 h-12 text-2xl">❚❚</div>
+                    <div class="wa-ctrl-btn w-16 h-12 text-2xl">■</div>
+                    <div class="wa-ctrl-btn w-16 h-12 text-2xl">▶|</div>
+                    <div class="wa-ctrl-btn w-16 h-12 text-2xl ml-2">⏏</div>
+                  </div>
+
+                  <div class="flex items-center gap-2">
+                    <div class="wa-ctrl-btn px-4 h-12 text-xl">
+                      <span style="color: #008000; margin-right: 6px;">●</span>SHUFFLE
+                    </div>
+                    <div class="wa-ctrl-btn px-4 h-12 text-xl">
+                      <span style="color: #008000; margin-right: 6px;">●</span>REPEAT
+                    </div>
+                  </div>
+
+                  <div class="w-12 h-12 flex items-center justify-center" style="color: #B59A4B; font-size: 34px; text-shadow: 2px 2px 0 #000;">
+                    ⚡
+                  </div>
+                </div>
+              </div>
+
+              <div class="wa-window">
+                <div class="wa-titlebar">
+                  <div class="wa-gold-lines"></div>
+                  <span class="wa-title-text">WINAMP EQUALIZER</span>
+                  <div class="wa-gold-lines"></div>
+                  <div class="wa-win-btns">
+                    <div class="wa-win-btn">×</div>
+                  </div>
+                </div>
+
+                <div class="flex items-center justify-between gap-4 mb-4 px-1">
+                  <div class="flex items-center gap-2">
+                    <div class="wa-ctrl-btn px-3.5 py-1.5 text-lg">
+                      <span style="color: #008000; margin-right: 6px;">●</span>ON
+                    </div>
+                    <div class="wa-ctrl-btn px-3.5 py-1.5 text-lg">
+                      <span style="color: #008000; margin-right: 6px;">●</span>AUTO
+                    </div>
+                  </div>
+
+                  <div class="wa-lcd-inset flex-1 h-12 relative flex items-center px-3">
+                    <div style="width: 100%; height: 2px; background: #5A5A7B;"></div>
+                    <svg viewBox="0 0 300 40" class="absolute inset-0 w-full h-full" preserveAspectRatio="none">
+                      <polyline
+                        fill="none"
+                        stroke="#FFFF00"
+                        stroke-width="2.5"
+                        points="0,24 30,14 60,18 90,26 120,25 150,20 180,15 210,12 240,14 270,11 300,13"
+                      />
+                    </svg>
+                  </div>
+
+                  <div class="wa-ctrl-btn px-4 py-1.5 text-lg">PRESETS</div>
+                </div>
+
+                <div class="flex items-end justify-between px-3 pb-1">
+                  <div class="wa-eq-col mr-3">
+                    <div class="wa-eq-rail">
+                      <div class="wa-eq-knob" style="top: 68px;">
+                        <span></span><span></span>
+                      </div>
+                    </div>
+                    <span style="font-family: 'Share Tech Mono', monospace; font-size: 18px; color: #FFFFFF;">PREAMP</span>
+                  </div>
+
+                  <div class="flex flex-col justify-between h-44 pb-7 mr-2" style="font-family: 'Share Tech Mono', monospace; font-size: 16px; color: #B59A4B;">
+                    <span>+12db</span>
+                    <span>0db</span>
+                    <span>-12db</span>
+                  </div>
+
+                  <div class="flex-1 flex items-end justify-between" id="wa-eq-bands"></div>
+                </div>
+              </div>
+
+              <div class="wa-window">
+                <div class="wa-titlebar">
+                  <div class="wa-gold-lines"></div>
+                  <span class="wa-title-text">WINAMP PLAYLIST</span>
+                  <div class="wa-gold-lines"></div>
+                  <div class="wa-win-btns">
+                    <div class="wa-win-btn">_</div>
+                    <div class="wa-win-btn">×</div>
+                  </div>
+                </div>
+
+                <div class="flex gap-2">
+                  <div class="wa-lcd-inset flex-1 py-3 flex flex-col justify-start" style="min-height: 635px; max-height: 635px; overflow: hidden;" id="wa-playlist-screen">
+                  </div>
+
+                  <div class="w-6 flex flex-col justify-between items-center py-0.5">
+                    <div class="wa-ctrl-btn w-6 h-6 text-xs">▲</div>
+                    <div class="wa-lcd-inset w-5 flex-1 my-1 relative">
+                      <div class="wa-ctrl-btn w-full h-16" style="position: absolute; top: 8px; left: 0;"></div>
+                    </div>
+                    <div class="wa-ctrl-btn w-6 h-6 text-xs">▼</div>
+                  </div>
+                </div>
+
+                <div class="flex items-center justify-between gap-2 mt-3 px-1">
+                  <div class="flex items-center gap-1.5 shrink-0">
+                    <div class="wa-ctrl-btn px-3 py-1.5 text-lg whitespace-nowrap">ADD</div>
+                    <div class="wa-ctrl-btn px-3 py-1.5 text-lg whitespace-nowrap">REM</div>
+                    <div class="wa-ctrl-btn px-3 py-1.5 text-lg whitespace-nowrap">SEL</div>
+                    <div class="wa-ctrl-btn px-3 py-1.5 text-lg whitespace-nowrap">MISC</div>
+                  </div>
+
+                  <div class="wa-lcd-inset px-3.5 py-1.5 flex items-center gap-3 shrink-0" style="font-family: 'Share Tech Mono', monospace; font-size: 21px; white-space: nowrap;">
+                    <span id="wa-total-duration" style="color: #00FF00; white-space: nowrap;">00:00/00:00</span>
+                    <span id="wa-track-count-footer" style="color: #009900; white-space: nowrap;">0 TRACKS</span>
+                  </div>
+
+                  <div class="wa-ctrl-btn px-3 py-1.5 text-lg shrink-0 whitespace-nowrap">LIST OPTS</div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="w-full text-center">
+              <div
+                id="wa-canvas-footer-text"
+                style="font-family: 'Share Tech Mono', monospace; font-size: 23px; line-height: 1.45; letter-spacing: 1.5px; color: #E5C158; font-weight: 700;"
+              >
+                Your Favorite Playlist with a Retro Feel<br />
+                Made by github.com/abdanleon/winamp-wrapped
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <div class="w-full max-w-md mt-6 text-center">
+        <button
+          type="button"
+          id="download-btn"
+          class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-emerald-600 to-green-500 hover:from-emerald-500 hover:to-green-400 active:scale-[0.99] text-white font-extrabold text-base sm:text-lg shadow-lg shadow-emerald-600/20 transition flex items-center justify-center gap-2.5 cursor-pointer"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+          <span id="download-btn-text">Download Gambar</span>
+        </button>
+
+        <p class="mt-2.5 text-xs sm:text-sm font-medium text-slate-500 dark:text-slate-400">
+          100% Gratis, Gambar HD, Siap Dibagikan!
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="w-full max-w-xl mx-auto px-4 pb-8 pt-1 text-center text-xs text-slate-500 dark:text-slate-400 leading-relaxed space-y-3">
+    <div class="flex items-center justify-center gap-2">
+      <span class="text-xs font-medium text-slate-600 dark:text-slate-300">Ganti Tema:</span>
+      <button
+        type="button"
+        id="theme-toggle-btn"
+        class="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 border border-slate-300 dark:border-slate-700 hover:border-emerald-500 dark:hover:border-emerald-500 shadow-sm transition cursor-pointer"
+      >
+        Mode Gelap
+      </button>
+    </div>
+
+    <div>
+      Website ini tidak bekerja sama dengan Winamp. Dibuat oleh <a href="https://abdanleon.blogspot.com/" target="_blank" rel="noopener noreferrer" class="font-semibold text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 underline underline-offset-2 transition">Abdan Leon</a> dan Google Gemini &#8226; <a href="https://github.com/abdanleon/winamp-wrapped" target="_blank" rel="noopener noreferrer" class="font-semibold text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 underline underline-offset-2 transition">Lihat Github</a>
+    </div>
+  </footer>
+
+<script src="./script.js"></script>
+</body>
+</html>
