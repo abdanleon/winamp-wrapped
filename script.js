@@ -10,7 +10,7 @@
     const catWeekBtn = document.getElementById('cat-week-btn');
     const catMonthBtn = document.getElementById('cat-month-btn');
     const catYearBtn = document.getElementById('cat-year-btn');
-    const waCanvasHeading = document.getElementById('wa-canvas-heading');
+    const waPlaylistTitle = document.getElementById('wa-playlist-title');
     const themeToggleBtn = document.getElementById('theme-toggle-btn');
 
     const searchInput = document.getElementById('itunes-search-input');
@@ -106,17 +106,17 @@
       if (selectedCategory === 'week') {
         catWeekBtn.classList.remove(...inactiveClasses);
         catWeekBtn.classList.add(...activeClasses);
-        waCanvasHeading.textContent = 'MY TOP PLAYLIST THIS WEEK';
+        waPlaylistTitle.textContent = 'MY TOP PLAYLIST THIS WEEK';
       } else if (selectedCategory === 'month') {
         catMonthBtn.classList.remove(...inactiveClasses);
         catMonthBtn.classList.add(...activeClasses);
-        waCanvasHeading.textContent = 'MY TOP PLAYLIST THIS MONTH';
+        waPlaylistTitle.textContent = 'MY TOP PLAYLIST THIS MONTH';
       } else if (selectedCategory === 'year') {
         catYearBtn.classList.remove(...inactiveClasses);
         catYearBtn.classList.add(...activeClasses);
-        waCanvasHeading.textContent = 'MY TOP PLAYLIST THIS YEAR';
+        waPlaylistTitle.textContent = 'MY TOP PLAYLIST THIS YEAR';
       } else {
-        waCanvasHeading.textContent = 'MY TOP PLAYLIST';
+        waPlaylistTitle.textContent = 'MY TOP PLAYLIST';
       }
     }
 
