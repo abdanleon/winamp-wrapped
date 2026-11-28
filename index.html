@@ -170,22 +170,13 @@
         <div class="preview-scale-wrapper" id="preview-scale-wrapper">
 
           <div id="winamp-capture-canvas">
-            <div class="w-full text-center">
-              <div style="font-family: 'Share Tech Mono', monospace; font-size: 26px; letter-spacing: 8px; color: #B59A4B; font-weight: 700;">
-                WINAMP WRAPPED
-              </div>
-              <div id="wa-canvas-heading" style="font-family: 'Share Tech Mono', monospace; font-size: 46px; letter-spacing: 3px; color: #FFFFFF; line-height: 1.1; margin-top: 4px; text-shadow: 0 4px 0 #14141F;">
-                MY TOP PLAYLIST
-              </div>
-            </div>
-
             <div class="flex flex-col items-center w-full" style="gap: 10px;">
 
               <div class="wa-window">
                 <div class="wa-titlebar">
                   <span style="color: #B59A4B; font-size: 22px;">⚡</span>
                   <div class="wa-gold-lines"></div>
-                  <span class="wa-title-text">WINAMP</span>
+                  <span class="wa-title-text">WINAMP WRAPPED</span>
                   <div class="wa-gold-lines"></div>
                   <div class="wa-win-btns">
                     <div class="wa-win-btn">_</div>
@@ -332,7 +323,7 @@
                 </div>
 
                 <div class="flex items-end justify-between px-3 pb-1">
-                  <div class="wa-eq-col mr-3">
+                  <div class="wa-eq-col mr-1.5">
                     <div class="wa-eq-rail">
                       <div class="wa-eq-knob" style="top: 68px;">
                         <span></span><span></span>
@@ -341,7 +332,7 @@
                     <span style="font-family: 'Share Tech Mono', monospace; font-size: 18px; color: #FFFFFF;">PREAMP</span>
                   </div>
 
-                  <div class="flex flex-col justify-between h-44 pb-7 mr-2" style="font-family: 'Share Tech Mono', monospace; font-size: 16px; color: #B59A4B;">
+                  <div class="flex flex-col justify-between items-start shrink-0 h-44 pb-7 mr-4" style="width: 56px; font-family: 'Share Tech Mono', monospace; font-size: 15px; color: #B59A4B; white-space: nowrap;">
                     <span>+12db</span>
                     <span>0db</span>
                     <span>-12db</span>
@@ -354,7 +345,7 @@
               <div class="wa-window">
                 <div class="wa-titlebar">
                   <div class="wa-gold-lines"></div>
-                  <span class="wa-title-text">WINAMP PLAYLIST</span>
+                  <span id="wa-playlist-title" class="wa-title-text">MY TOP PLAYLIST</span>
                   <div class="wa-gold-lines"></div>
                   <div class="wa-win-btns">
                     <div class="wa-win-btn">_</div>
@@ -375,7 +366,7 @@
                   </div>
                 </div>
 
-                <div class="flex items-center justify-between gap-2 mt-3 px-1">
+                <div class="flex items-center justify-between gap-3 mt-3 px-1">
                   <div class="flex items-center gap-1.5 shrink-0">
                     <div class="wa-ctrl-btn px-3 py-1.5 text-lg whitespace-nowrap">ADD</div>
                     <div class="wa-ctrl-btn px-3 py-1.5 text-lg whitespace-nowrap">REM</div>
@@ -383,7 +374,7 @@
                     <div class="wa-ctrl-btn px-3 py-1.5 text-lg whitespace-nowrap">MISC</div>
                   </div>
 
-                  <div class="wa-lcd-inset px-3.5 py-1.5 flex items-center gap-3 shrink-0" style="font-family: 'Share Tech Mono', monospace; font-size: 21px; white-space: nowrap;">
+                  <div class="wa-lcd-inset flex-1 px-5 py-1.5 flex items-center justify-center gap-6" style="min-width: 340px; font-family: 'Share Tech Mono', monospace; font-size: 21px; white-space: nowrap;">
                     <span id="wa-total-duration" style="color: #00FF00; white-space: nowrap;">00:00/00:00</span>
                     <span id="wa-track-count-footer" style="color: #009900; white-space: nowrap;">0 TRACKS</span>
                   </div>
@@ -400,7 +391,7 @@
                 style="font-family: 'Share Tech Mono', monospace; font-size: 23px; line-height: 1.45; letter-spacing: 1.5px; color: #E5C158; font-weight: 700;"
               >
                 Your Favorite Playlist with a Retro Feel<br />
-                Made by abdanleon.github.io/winamp-wrapped
+                Made by github.com/abdanleon/winamp-wrapped
               </div>
             </div>
 
@@ -431,7 +422,7 @@
 
   <footer class="w-full max-w-xl mx-auto px-4 pb-8 pt-1 text-center text-xs text-slate-500 dark:text-slate-400 leading-relaxed space-y-3">
     <div class="flex items-center justify-center gap-2">
-      <span class="text-xs font-medium text-slate-600 dark:text-slate-300">Ganti Tema</span>
+      <span class="text-xs font-medium text-slate-600 dark:text-slate-300">Ganti Tema:</span>
       <button
         type="button"
         id="theme-toggle-btn"
@@ -441,9 +432,7 @@
       </button>
     </div>
 
-    <div>
-      Website ini tidak bekerja sama dengan Winamp. Dibuat oleh <a href="https://abdanleon.blogspot.com/" target="_blank" rel="noopener noreferrer" class="font-semibold text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 underline underline-offset-2 transition">Abdan Leon</a> dan Google Gemini &#8226; <a href="https://github.com/abdanleon/winamp-wrapped" target="_blank" rel="noopener noreferrer" class="font-semibold text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 underline underline-offset-2 transition">Lihat Github</a>
-    </div>
+    <p>Untuk pengalaman lebih baik, buka website ini di Chrome atau Safari. Website ini tidak bekerja sama dengan Winamp.<br />Dibuat oleh <a href="https://abdanleon.blogspot.com/" target="_blank" rel="noopener noreferrer" class="font-semibold text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 underline underline-offset-2 transition">Abdan Leon</a> dan Google Gemini &#8226; <a href="https://github.com/abdanleon/winamp-wrapped" target="_blank" rel="noopener noreferrer" class="font-semibold text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 underline underline-offset-2 transition">Lihat Github</a></p>
   </footer>
 
 <script src="./script.js"></script>
