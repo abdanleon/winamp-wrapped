@@ -368,12 +368,24 @@
       searchSpinner.classList.remove('hidden');
 
       try {
-        const endpoint = `https://itunes.apple.com/search?term=${encodeURIComponent(query)}&media=music&entity=song&limit=6`;
-        const response = await fetch(endpoint, { signal: activeSearchController.signal });
-        if (!response.ok) throw new Error('Gagal mengambil data lagu');
+        const cleanQuery = query.replace(/\s+/g, ' ').trim();
+        const endpointID = `https://itunes.apple.com/search?term=${encodeURIComponent(cleanQuery)}&country=ID&media=music&entity=song&limit=6`;
+        const responseID = await fetch(endpointID, { signal: activeSearchController.signal });
+        if (!responseID.ok) throw new Error('Gagal mengambil data lagu');
 
-        const data = await response.json();
-        renderSearchDropdown(data.results || []);
+        const dataID = await responseID.json();
+        let results = dataID.results || [];
+
+        if (results.length === 0) {
+          const endpointGlobal = `https://itunes.apple.com/search?term=${encodeURIComponent(cleanQuery)}&country=US&media=music&entity=song&limit=6`;
+          const responseGlobal = await fetch(endpointGlobal, { signal: activeSearchController.signal });
+          if (responseGlobal.ok) {
+            const dataGlobal = await responseGlobal.json();
+            results = dataGlobal.results || [];
+          }
+        }
+
+        renderSearchDropdown(results);
       } catch (err) {
         if (err.name !== 'AbortError') {
           searchDropdown.innerHTML = `
@@ -441,7 +453,7 @@
 
       searchDebounceTimer = setTimeout(() => {
         searchItunesSongs(query);
-      }, 350);
+      }, 450);
     });
 
     searchDropdown.addEventListener('click', (e) => {
